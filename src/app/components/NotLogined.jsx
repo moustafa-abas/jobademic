@@ -19,7 +19,7 @@ const style = {
 };
 
 const NotLogined = () => {
-  const { flowOpen ,handleClose,logined} = useStore()
+  const { flowOpen ,handleClose,logined,createJob} = useStore()
   return (
 
 <Modal
@@ -31,9 +31,8 @@ const NotLogined = () => {
 >
   
   <Box sx={style} className='w-fit text-gray-800'>
-{logined?
-    <h2>wait</h2>
-:<>
+{createJob?
+<>
 <Typography id="modal-modal-title" variant="h6" component="h2" className='text-center'>
 you are not logined    </Typography>
 <Typography id="modal-modal-description" sx={{ mt: 2 }}>
@@ -42,6 +41,8 @@ you are not logined    </Typography>
  <a className='w-24 h-10 border-btn flex justify-center items-center capitalize'  href="/register/login">log in</a>
  <a className='w-24 h-10 bg-btn flex justify-center capitalize items-center'  href="/register/sign">sign up</a>
 </div>    </Typography></>
+:
+<h2>wait</h2>
 
   }
   </Box>

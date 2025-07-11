@@ -6,7 +6,7 @@ import logo from '../assets/logo.jpg'
 import Image from 'next/image'
 const Footer = () => {
   return (
-<footer className="Container flex gap-10 flex-col md:flex-row justify-evenly ">
+<footer className="Container flex gap-10 flex-col md:flex-row justify-evenly pt-10  ">
   <nav className='flex flex-col gap-4 capitalize '>
     <h6 className="font-bold text-xl lg:mb-6">Services</h6>
     <p className="text-gray-700 ">best courses content</p>
@@ -34,9 +34,9 @@ const Footer = () => {
     <a href='/community' className="text-gray-700">community</a>
     <a href='/jobs' className="text-gray-700">Jobs</a>
   </nav>
-  <nav className='flex flex-col gap-4 capitalize'>
+  <nav className='flex flex-col items-center gap-4 capitalize'>
     {/* <h6 className="font-bold text-xl lg:mb-6">Social</h6> */}
-    <Image src='' alt="logo" />
+    <Image src={logo} alt="logo" width={100} />
     <div className="flex  items-center gap-2">
       <a href='#'>
 <Image src={facebook} alt="" />

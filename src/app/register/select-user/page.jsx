@@ -1,20 +1,24 @@
 "use client";
+import { selectRole } from "@/app/Functions";
+import { useStore } from "@/app/store/store";
 import React, { useEffect, useState } from "react";
 
 const page = () => {
+  const { selectUserError } = useStore(); // ✅ استخدم getState
+
   const [role, setRole] = useState("");
   const [alert, setAlert] = useState(false);
-
   const alertFunction = () => {
     if (!role) {
-      const errorSound = new Audio('/assets/error-sound.mp3');
+      const errorSound = new Audio("/assets/error-sound.mp3");
       errorSound.play();
       setAlert(true);
       setTimeout(() => {
-        setAlert(false)
+        setAlert(false);
       }, 1500);
-    }else{
-      setAlert(false)
+    } else {
+      setAlert(false);
+      selectRole(role);
     }
   };
   return (
@@ -23,7 +27,9 @@ const page = () => {
       <ul className="flex   flex-wrap sm:flex-nowrap  justify-center  gap-20 items-center mb-24">
         <li
           className={`sm:w-1/3  duration-500 ${
-            role === "student" ? "bg-[var(--main-color)] scale-110 font-bold text-[var(--main-color)]" : "bg-white"
+            role === "student"
+              ? "bg-[var(--main-color)] scale-110 font-bold text-[var(--main-color)]"
+              : "bg-white"
           } p-6 sm:p-12 rounded-full cursor-pointer relative`}
           onClick={() => setRole("student")}
         >
@@ -39,11 +45,13 @@ const page = () => {
               fill={`${role === "student" ? "#fff" : "var(--main-color)"}`}
             />
           </svg>
-          <p className={`absolute -bottom-14 text-center  text-xl`} >Student</p>
+          <p className={`absolute -bottom-14 text-center  text-xl`}>Student</p>
         </li>
         <li
           className={`sm:w-1/3  duration-500 relative ${
-            role === "company" ? "bg-[var(--main-color)] scale-110 font-bold text-[var(--main-color)]" : "bg-white"
+            role === "company"
+              ? "bg-[var(--main-color)] scale-110 font-bold text-[var(--main-color)]"
+              : "bg-white"
           } p-6 sm:p-12 rounded-full cursor-pointer`}
           onClick={() => setRole("company")}
         >
@@ -59,12 +67,13 @@ const page = () => {
               fill={`${role === "company" ? "#fff" : "var(--main-color)"}`}
             />
           </svg>
-          <p className={`absolute -bottom-14 text-center  text-xl`} >company</p>
-
+          <p className={`absolute -bottom-14 text-center  text-xl`}>company</p>
         </li>
         <li
           className={`sm:w-1/3  duration-500 relative ${
-            role === "instructor" ? "bg-[var(--main-color)] scale-110 font-bold text-[var(--main-color)]" : "bg-white"
+            role === "instructor"
+              ? "bg-[var(--main-color)] scale-110 font-bold text-[var(--main-color)]"
+              : "bg-white"
           } p-6 sm:p-12 rounded-full cursor-pointer`}
           onClick={() => setRole("instructor")}
         >
@@ -96,25 +105,44 @@ const page = () => {
               </clipPath>
             </defs>
           </svg>
-          <p className={`absolute -bottom-14 text-center  text-xl`} >instructor</p>
-
+          <p className={`absolute -bottom-14 text-center  text-xl`}>
+            instructor
+          </p>
         </li>
       </ul>
+      <p className="capitalize ms-1 mt-1 mb-3 text-red-600">
+        {selectUserError}
+      </p>
+
       <div className="w-3/4 sm:w-1/2 md:w-1/3 flex flex-col gap-5">
-      <button className="w-full bg-btn h-14  flex justify-center items-center " onClick={alertFunction}>
-{role?
-      <a href={`/register/${role}`} className="w-full bg-btn h-14  flex justify-center items-center " >
-      Next Step</a>:'Next Step'
-}
- </button>
-      <a href="/register/sign" className="w-full border-btn h-14  flex justify-center items-center ">
-      Back</a>
+        <button
+          className="w-full bg-btn h-14  flex justify-center items-center "
+          onClick={() => {
+            alertFunction();
+          }}
+        >
+          Next Step
+        </button>
+        <a
+          href="/register/sign"
+          className="w-full border-btn h-14  flex justify-center items-center "
+        >
+          Back
+        </a>
       </div>
-      <div className={`flex items-center bg-red-500 text-white text-sm font-bold px-4 py-3 absolute right-0 ${alert?'opacity-100':'opacity-0'} duration-500 `} role="alert">
-  <svg className="fill-current w-4 h-4 mr-2"  viewBox="0 0 20 20"><path d="M12.432 0c1.34 0 2.01.912 2.01 1.957 0 1.305-1.164 2.512-2.679 2.512-1.269 0-2.009-.75-1.974-1.99C9.789 1.436 10.67 0 12.432 0zM8.309 20c-1.058 0-1.833-.652-1.093-3.524l1.214-5.092c.211-.814.246-1.141 0-1.141-.317 0-1.689.562-2.502 1.117l-.528-.88c2.572-2.186 5.531-3.467 6.801-3.467 1.057 0 1.233 1.273.705 3.23l-1.391 5.352c-.246.945-.141 1.271.106 1.271.317 0 1.357-.392 2.379-1.207l.6.814C12.098 19.02 9.365 20 8.309 20z" /></svg>
-  <p className="capitalize">please select your role.</p>
-</div>
- </main>
+
+      <div
+        className={`flex items-center bg-red-500 text-white text-sm font-bold px-4 py-3 absolute right-0 ${
+          alert ? "opacity-100" : "opacity-0"
+        } duration-500 `}
+        role="alert"
+      >
+        <svg className="fill-current w-4 h-4 mr-2" viewBox="0 0 20 20">
+          <path d="M12.432 0c1.34 0 2.01.912 2.01 1.957 0 1.305-1.164 2.512-2.679 2.512-1.269 0-2.009-.75-1.974-1.99C9.789 1.436 10.67 0 12.432 0zM8.309 20c-1.058 0-1.833-.652-1.093-3.524l1.214-5.092c.211-.814.246-1.141 0-1.141-.317 0-1.689.562-2.502 1.117l-.528-.88c2.572-2.186 5.531-3.467 6.801-3.467 1.057 0 1.233 1.273.705 3.23l-1.391 5.352c-.246.945-.141 1.271.106 1.271.317 0 1.357-.392 2.379-1.207l.6.814C12.098 19.02 9.365 20 8.309 20z" />
+        </svg>
+        <p className="capitalize">please select your role.</p>
+      </div>
+    </main>
   );
 };
 

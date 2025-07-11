@@ -4,6 +4,7 @@ import Image from 'next/image';
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import profile from'../../assets/upload-image.svg'
+import { companyRegister } from '@/app/Functions';
 const page = () => {
     const [company_logo, setCompany_logo] = useState();
     const {
@@ -13,7 +14,7 @@ const page = () => {
       } = useForm();
  
       const onSubmit=(data)=>{
-        console.log(data)
+        companyRegister(data)
       }
   return (
 
@@ -25,6 +26,7 @@ const page = () => {
         <div className="     mt-8   ">
             <input id="company_logo" name="company_logo"   type='file' accept='image/*'  className="hidden  " 
       {...register("company_logo",{
+            required: "* select your company logo",
         onChange:(e)=>
             setCompany_logo(URL.createObjectURL(e.target.files[0]))
       })}                
@@ -34,6 +36,9 @@ const page = () => {
              </label>
 
         </div>
+         <p className="capitalize ms-1 mt-1 mb-3 text-red-600">
+        {errors.company_logo?.message}
+      </p>
 
         <div className="    h-12  mt-8  border-b  ">
             <input id="company_name" name="company_name"  autoComplete="company_name" type='text' placeholder='company name' className="block  w-full h-full     px-3 py-1.5 text-base placeholder:text-gray-400  sm:text-sm/6 focus:outline-none bg-transparent" 

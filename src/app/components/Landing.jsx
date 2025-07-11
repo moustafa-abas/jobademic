@@ -4,7 +4,7 @@ import landing from '../assets/landing.png'
 
 const Landing = () => {
   return (
-<section className="Container flex sm:flex-row flex-col-reverse justify-between items-center ">
+<section className="Container flex sm:flex-row flex-col-reverse h-screen justify-between items-center ">
         <main className=" sm:w-1/2">
         <hgroup>
           <h1 className="text-6xl font-semibold tracking-wide">Learn and find job in <span className="text-[var(--main-color)]"> one platform</span></h1>
@@ -12,7 +12,7 @@ const Landing = () => {
         </hgroup>
         </main>
        <aside className="sm:w-1/2">
-        <Image src={landing} alt="" className='w-full'/>
+        <Image src={landing} alt="landing" className='w-full'/>
        </aside>
     </section>
   )
