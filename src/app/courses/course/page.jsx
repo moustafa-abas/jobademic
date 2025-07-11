@@ -1,6 +1,6 @@
 "use client"
 import Course from '@/app/components/Course'
-import { deleteCourse, getLessons } from '@/app/Functions'
+import { deleteCourse } from '@/app/Functions'
 import { useStore } from '@/app/store/store'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
@@ -8,9 +8,7 @@ const page = () => {
   const{courses , course,lessons,user}=useStore()
     const [postOption, setPostOption] = useState(false);
   
-  useEffect(() => {
-  getLessons()
-  }, [])
+
   return (
     <div className='Container flex justify-between gap-10'>
 {user?.role==='instructor'?
@@ -56,17 +54,30 @@ const page = () => {
       <h1 className='text-4xl text-[var(--main-color)]'>{course?.title} </h1>
 <p className='  text-lg mt-2 text-[var(--second-color)]'>{course?.description}</p>
       </hgroup>
+      {
+        lessons.length>0?
+        <>
+        
+   {lessons?.map((lesson,index)=>
+
    
+  
       <hgroup className='flex gap-6 items-center my-6'> 
-        <h2 className='bg-white text-[var(--second-color)] w-10 h-10 rounded-full flex justify-center items-center'>1</h2>
-{/* <a href={lesson?.video_url} target='_blank' className='flex flex-col text-xl'>
-<span className='text-[var(--main-color)]'>{lesson?.title}</span>
+        <h2 className='bg-white text-[var(--second-color)]  p-2 rounded-full flex justify-center items-center'>{index +1}</h2>
+<a href={lesson?.video_url} target='_blank' className='flex flex-col text-xl'>
+<span className='text-[var(--main-color)] mb-4'>{lesson?.title}</span>
 <span className='text-[var(--second-color)]'>{lesson?.content}</span>
-</a> */}
+</a>
       </hgroup>
+      )
+   }</>
+   :
+      <h1 className='text-4xl text-center mt-28 capitalize'>no lessons here yet </h1>
+
+      }
         </section>
         <section className='w-1/5 hidden  md:block'>
-        <h1 className='mb-6 text-xl'>Other Courses </h1>
+        <h1 className='mb-6 text-xl'>Other Courses : </h1>
         {
           courses?.sort(() => Math.random() - 0.5).slice(0,2).map((course)=>
             <Course data={course} key={course?.id}/>

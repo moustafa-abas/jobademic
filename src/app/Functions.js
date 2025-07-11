@@ -350,20 +350,21 @@ setCourses( response.data.data);
 }
 export const getOneCourse=async(id)=>{
 
-  const { setJob, setLoading,token,setError,setCourse} = useStore.getState(); // ✅ استخدم getState
+  const { setJob, setLoading,token,setError,setCourse,setLessons} = useStore.getState(); // ✅ استخدم getState
   try {
     setLoading(true)
     const response = await axios.get(
-      `${base}api/courses/${id}` ,
+      `${base}api/public/courses/${id}/lessons` ,
             {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        // },
                           withCredentials: true // بس لو بتتعامل مع كوكيز، مش ضروري مع bearer tokens
 
       }
     );
-    setCourse(response.data.data)
+    setCourse(response?.data?.data?.course)
+    setLessons(response.data.data.course.lessons)
     location.replace('/courses/course')
 } catch (error) {
     setError(error.response?.data?.message  ); 
